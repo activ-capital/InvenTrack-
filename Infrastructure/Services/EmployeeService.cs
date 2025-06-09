@@ -117,13 +117,13 @@ public class EmployeeService(IEmployeeRepository repository, IWebHostEnvironment
 
             var filePath = Path.Combine(uploadsFolder, uniqueFileName);
 
-            await using (var stream = new FileStream(filePath, FileMode.Create))
+            await using (var stream = new FileStream(filePath, FileMode.Create)) 
             {
                 await request.ProfileImage.CopyToAsync(stream);
             }
 
             employee.ProfileImagePath = $"/uploads/profiles/{uniqueFileName}";
-        }
+        } 
 
         var result = await repository.CreateEmployee(employee);
         return result == 1

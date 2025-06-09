@@ -16,6 +16,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using IQrCodeService = Infrastructure.Interfaces.IQrCodeService;
 
 namespace Infrastructure.Extensions;
 
@@ -46,5 +47,6 @@ public static class RegisterService
 
         services.AddScoped<IAssetTransactionRepository, AssetTransactionRepository>();
         services.AddScoped<IAssetTransactionService, AssetTransactionService>();
+        services.AddScoped<IQrCodeService, QrCodeService>();
     }
 }

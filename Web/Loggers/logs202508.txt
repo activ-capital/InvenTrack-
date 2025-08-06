@@ -44,3 +44,6 @@
 2025-08-06 09:38:06.206 +03:00 [INF] Executed endpoint 'Web.Controller.QrCodeController.GenerateInventoryItemQr (Web)'
 2025-08-06 09:38:06.222 +03:00 [INF] Request finished HTTP/1.1 GET http://localhost:5093/api/QrCode/inventory/1 - 200 3478 image/png 4579.4246ms
 2025-08-06 12:27:37.192 +03:00 [INF] Application is shutting down...
+2025-08-06 13:16:48.188 +03:00 [ERR] An error occurred using the connection to database 'koyebdb' on server 'tcp://ep-wild-darkness-a1motyk0.ap-southeast-1.pg.koyeb.app:5432'.
+2025-08-06 13:35:26.006 +03:00 [INF] Acquiring an exclusive lock for migration application. See https://aka.ms/efcore-docs-migrations-lock for more information if this takes too long.
+2025-08-06 13:35:27.024 +03:00 [INF] Applying migration '20250806101450_addfield'.

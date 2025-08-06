@@ -68,5 +68,6 @@ public class AssetTransactionRepository(DataContext context, ILogger<AssetTransa
         {
             logger.LogError(e.Message);
             return 0;
-        }    }
+        }
+    }
 }

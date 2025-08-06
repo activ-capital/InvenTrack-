@@ -22,7 +22,7 @@ public class EmployeeService(IEmployeeRepository repository, IWebHostEnvironment
             .Skip((filter.PageNumber - 1) * filter.PageSize)
             .Take(filter.PageSize)
             .ToList();
-        var result = employee.Select(e => new GetEmployeeDto()
+        var result = data.Select(e => new GetEmployeeDto()
         {
             Id = e.Id,
             FullName = e.FullName,
@@ -101,7 +101,6 @@ public class EmployeeService(IEmployeeRepository repository, IWebHostEnvironment
             Role = request.Role,
             PositionId = request.PositionId,
             SubDepartmentId = request.SubDepartmentId,
-            ProfileImage = request.ProfileImage,
         };
 
         if (request.ProfileImage != null && request.ProfileImage.Length > 0)
@@ -151,7 +150,7 @@ public class EmployeeService(IEmployeeRepository repository, IWebHostEnvironment
             var fileExtension = Path.GetExtension(request.ProfileImage.FileName).ToLowerInvariant();
             var uniqueFileName = $"{Guid.NewGuid()}{fileExtension}";
             var filePath = Path.Combine(_environment.ContentRootPath, "uploads", "profiles", uniqueFileName);
-            using (var stream = new FileStream(filePath, FileMode.Create))
+            await using (var stream = new FileStream(filePath, FileMode.Create))
             {
                 await request.ProfileImage.CopyToAsync(stream);
             }
@@ -196,7 +195,7 @@ public class EmployeeService(IEmployeeRepository repository, IWebHostEnvironment
         var uniqueFileName = $"{Guid.NewGuid()}{fileExtension}";
         var newFilePath = Path.Combine(uploadsFolder, uniqueFileName);
 
-        using (var stream = new FileStream(newFilePath, FileMode.Create))
+            await using (var stream = new FileStream(newFilePath, FileMode.Create))
         {
             await profileImage.CopyToAsync(stream);
         }

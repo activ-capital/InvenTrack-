@@ -19,7 +19,7 @@ public class InventoryItemService(IInventoryItemRepository repository) : IInvent
             .Skip((filter.PageNumber - 1) * filter.PageSize)
             .Take(filter.PageSize)
             .ToList();
-        var result = inventoryItem.Select(i => new GetInventoryItemDto()
+        var result = data.Select(i => new GetInventoryItemDto()
         {
             Id = i.Id,
             Name = i.Name,

@@ -18,7 +18,7 @@ public class AssetTransactionService(IAssetTransactionRepository repository) : I
             .Skip((filter.PageNumber - 1) * filter.PageSize)
             .Take(filter.PageSize)
             .ToList();
-        var result = assetTransaction.Select(a => new GetAssetTransactionDto()
+        var result = data.Select(a => new GetAssetTransactionDto()
         {
             Id = a.Id,
             FixedAssetId = a.FixedAssetId,

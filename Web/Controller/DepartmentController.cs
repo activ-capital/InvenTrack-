@@ -1,10 +1,10 @@
 using Domain.Dtos;
 using Domain.Dtos.DepartmentDto;
-using Domain.Enum;
+
 using Domain.Filter;
 using Infrastructure.Interfaces;
 using Infrastructure.Response;
-using Microsoft.AspNetCore.Authorization;
+
 using Microsoft.AspNetCore.Mvc;
 
 namespace Web.Controller;

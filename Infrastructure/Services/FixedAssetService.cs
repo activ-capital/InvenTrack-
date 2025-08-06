@@ -5,7 +5,6 @@ using Domain.Filter;
 using Infrastructure.Interfaces;
 using Infrastructure.Repositories.FixedAssetRepositories;
 using Infrastructure.Response;
-
 namespace Infrastructure.Services;
 
 public class FixedAssetService(IFixedAssetRepository repository) : IFixedAssetService
@@ -18,7 +17,7 @@ public class FixedAssetService(IFixedAssetRepository repository) : IFixedAssetSe
             .Skip((filter.PageNumber - 1) * filter.PageSize)
             .Take(filter.PageSize)
             .ToList();
-        var result = fixedAssets.Select(f => new GetFixedAssetDto()
+        var result = data.Select(f => new GetFixedAssetDto()
         {
             Id = f.Id,
             Name = f.Name,

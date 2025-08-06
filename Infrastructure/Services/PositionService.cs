@@ -20,7 +20,7 @@ public class PositionService(IPositionRepository repository) : IPositionService
             .Skip((filter.PageNumber - 1) * filter.PageSize)
             .Take(filter.PageSize)
             .ToList();
-        var result = positions.Select(p => new GetPositionDto
+        var result = data.Select(p => new GetPositionDto
         {
             Id = p.Id,
             Name = p.Name,

@@ -13,7 +13,7 @@ public class QrCodeService(
     IFixedAssetRepository fixedAssetRepository)
     : IQrCodeService
 {
-    private readonly IInventoryItemRepository _inventoryItemRepository =
+    private readonly IInventoryItemRepository _inventoryItemRepository = 
         inventoryItemRepository ?? throw new ArgumentNullException(nameof(inventoryItemRepository));
 
     private readonly IFixedAssetRepository _fixedAssetRepository =
@@ -28,7 +28,8 @@ public class QrCodeService(
         if (item == null)
             return new ApiResponse<byte[]>(HttpStatusCode.NotFound, "Inventory item not found");
 
-        var qrText = $"InventoryItem:\nName: {item.Name}\nInventoryNumber #: {item.InventoryNumber}\nDate: {item.AcquisitionDate}\nUnit: {item.Unit}\nEmployeeId: {item.EmployeeId}";
+        var qrText =
+            $"InventoryItem:\nName: {item.Name}\nInventoryNumber: {item.InventoryNumber}\nDate: {item.AcquisitionDate}\nUnit: {item.Unit}\nEmployeeId: {item.EmployeeId}";
         var qrImage = GenerateQrImage(qrText);
         return new ApiResponse<byte[]>(qrImage);
     }
@@ -42,7 +43,8 @@ public class QrCodeService(
         if (asset == null)
             return new ApiResponse<byte[]>(HttpStatusCode.NotFound, "Fixed asset not found");
 
-        var qrText = $"FixedAsset:\nName: {asset.Name}\nInventoryNumber #: {asset.InventoryNumber}\nDate: {asset.AcquisitionDate}\nUnit: {asset.SerialNumber}\nEmployeeId: {asset.EmployeeId}";
+        var qrText =
+            $"FixedAsset:\nName: {asset.Name}\nInventoryNumber #: {asset.InventoryNumber}\nDate: {asset.AcquisitionDate}\nUnit: {asset.SerialNumber}\nEmployeeId: {asset.EmployeeId}";
         var qrImage = GenerateQrImage(qrText);
         return new ApiResponse<byte[]>(qrImage);
     }

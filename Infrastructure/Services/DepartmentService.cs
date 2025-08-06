@@ -20,7 +20,7 @@ public class DepartmentService(IDepartmentRepository repository) : IDepartmentSe
             .Skip((filter.PageNumber - 1) * filter.PageSize)
             .Take(filter.PageSize)
             .ToList();
-        var result = department.Select(d => new GetDepartmentDto()
+        var result = data.Select(d => new GetDepartmentDto()
         {
             Id = d.Id,
             Name = d.Name,

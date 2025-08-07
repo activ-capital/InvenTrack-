@@ -2,6 +2,7 @@ using Infrastructure.Extensions;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.WebHost.UseUrls("http://*:8000");
 builder.Host.AddSerilogLogger();
 builder.Host.UseSerilog();
 

@@ -26,7 +26,7 @@ public class SubDepartmentService(ISubDepartmentRepository repository) : ISubDep
             Id = s.Id,
             Name = s.Name,
             DepartmentId = s.DepartmentId,
-            EmployeeId = s.EmployeeId,
+         
             Employees = s.Employees.Select(e=> new GetEmployeeDto()
             {
                 Id = e.Id,
@@ -52,7 +52,7 @@ public class SubDepartmentService(ISubDepartmentRepository repository) : ISubDep
             Id = subDepartment.Id,
             Name = subDepartment.Name,
             DepartmentId = subDepartment.DepartmentId,
-            EmployeeId = subDepartment.EmployeeId,
+           
         };
         return new ApiResponse<GetSubDepartmentDto>(result);
     }
@@ -63,7 +63,7 @@ public class SubDepartmentService(ISubDepartmentRepository repository) : ISubDep
         {
             Name = request.Name,
             DepartmentId = request.DepartmentId,
-            EmployeeId = request.EmployeeId
+          
         };
         var result = await repository.CreateSubDepartment(subDepartment);
 
@@ -83,7 +83,7 @@ public class SubDepartmentService(ISubDepartmentRepository repository) : ISubDep
         department.Id = request.Id;
         department.Name = request.Name;
         department.DepartmentId = request.DepartmentId;
-        department.EmployeeId = request.EmployeeId;
+      
         var result = await repository.UpdateSubDepartment(department);
         return result == 1
             ? new ApiResponse<string>("Success")

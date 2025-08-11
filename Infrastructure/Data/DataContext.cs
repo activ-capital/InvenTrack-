@@ -23,11 +23,7 @@ public class DataContext(DbContextOptions<DataContext> options) : DbContext(opti
             .HasForeignKey(e => e.SubDepartmentId)
             .OnDelete(DeleteBehavior.Cascade);
 
-        modelBuilder.Entity<SubDepartment>()
-            .HasOne(sd => sd.Employee)        // начальник подотдела
-            .WithMany()                      // у начальника нет коллекции подотделов
-            .HasForeignKey(sd => sd.EmployeeId)
-            .OnDelete(DeleteBehavior.Restrict); 
+       
 
     }
 }

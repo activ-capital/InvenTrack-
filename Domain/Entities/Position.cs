@@ -6,5 +6,5 @@ public class Position
 {
     public int Id { get; set; }
     public required string Name { get; set; }
-    public List<Employee> Employees { get; set; } = new();
+    public List<Employee>? Employees { get; set; } 
 }

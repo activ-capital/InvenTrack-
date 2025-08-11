@@ -21,7 +21,7 @@ public class EmployeeRepository(DataContext context, ILogger<EmployeeRepository>
 
     public async Task<Employee?> GetEmployee(Expression<Func<Employee, bool>>? filter = null)
     {
-        var query = context.Employees.AsQueryable();
+        var query = context.Employees.Include(f => f.FixedAssets).Include(i => i.InventoryItems).AsQueryable();
 
         if (filter != null)
         {

@@ -49,3 +49,5 @@
 2025-08-06 13:35:27.024 +03:00 [INF] Applying migration '20250806101450_addfield'.
 2025-08-07 10:36:43.726 +03:00 [INF] Acquiring an exclusive lock for migration application. See https://aka.ms/efcore-docs-migrations-lock for more information if this takes too long.
 2025-08-07 10:36:44.063 +03:00 [INF] Applying migration '20250807073424_addfield'.
+2025-08-11 12:05:52.781 +03:00 [INF] Acquiring an exclusive lock for migration application. See https://aka.ms/efcore-docs-migrations-lock for more information if this takes too long.
+2025-08-11 12:05:53.112 +03:00 [INF] Applying migration '20250811090502_update'.

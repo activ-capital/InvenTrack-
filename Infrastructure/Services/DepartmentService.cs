@@ -24,13 +24,12 @@ public class DepartmentService(IDepartmentRepository repository) : IDepartmentSe
         {
             Id = d.Id,
             Name = d.Name,
-            EmployeeId = d.EmployeeId,
             SubDepartments = d.SubDepartments.Select(s => new GetSubDepartmentDto()
             {
                 Id = s.Id,
                 Name = s.Name,
                 DepartmentId = s.DepartmentId,
-                EmployeeId = s.EmployeeId,
+
             }).ToList()
         }).ToList();
         return new PaginationResponse<List<GetDepartmentDto>>(result, totalRecords, filter.PageNumber,
@@ -49,13 +48,13 @@ public class DepartmentService(IDepartmentRepository repository) : IDepartmentSe
         {
             Id = department.Id,
             Name = department.Name,
-            EmployeeId = department.EmployeeId,
+           
             SubDepartments = department.SubDepartments.Select(s => new GetSubDepartmentDto()
             {
                 Id = s.Id,
                 Name = s.Name,
                 DepartmentId = s.DepartmentId,
-                EmployeeId = s.EmployeeId,
+                
             }).ToList()
         };
         return new ApiResponse<GetDepartmentDto>(result);
@@ -66,7 +65,7 @@ public class DepartmentService(IDepartmentRepository repository) : IDepartmentSe
         var department = new Department()
         {
             Name = request.Name,
-            EmployeeId = request.EmployeeId,
+          
         };
         var result = await repository.CreateDepartment(department);
 
@@ -85,7 +84,7 @@ public class DepartmentService(IDepartmentRepository repository) : IDepartmentSe
 
         department.Id = request.Id;
         department.Name = request.Name;
-        department.EmployeeId = request.EmployeeId;
+        
         var result = await repository.UpdateDepartment(department);
         return result == 1
             ? new ApiResponse<string>("Success")

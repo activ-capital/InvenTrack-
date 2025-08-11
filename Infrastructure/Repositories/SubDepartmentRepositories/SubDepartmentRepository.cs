@@ -21,7 +21,7 @@ public class SubDepartmentRepository(DataContext context, ILogger<SubDepartment>
 
     public async Task<SubDepartment?> GetSubDepartment(Expression<Func<SubDepartment, bool>>? filter = null)
     {
-        var query = context.SubDepartments.AsQueryable();
+        var query = context.SubDepartments.Include(e=>e.Employees).AsQueryable();
 
         if (filter != null)
         {

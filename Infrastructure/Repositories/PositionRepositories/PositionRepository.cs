@@ -19,7 +19,7 @@ public class PositionRepository(DataContext context, ILogger<PositionRepository>
 
     public async Task<Position?> GetPosition(Expression<Func<Position, bool>>? filter = null)
     {
-        var query = context.Positions.AsQueryable();
+        var query = context.Positions.Include(e=>e.Employees).AsQueryable();
 
         if (filter != null)
         {

@@ -8,7 +8,6 @@ public class GetSubDepartmentDto
     public string Name { get; set; }
     public int DepartmentId { get; set; }
     // Начальник подотдела
-    public int? EmployeeId { get; set; }
     public List<GetEmployeeDto> Employees { get; set; } = new();
 
 }

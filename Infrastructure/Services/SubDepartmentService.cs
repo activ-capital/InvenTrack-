@@ -52,6 +52,13 @@ public class SubDepartmentService(ISubDepartmentRepository repository) : ISubDep
             Id = subDepartment.Id,
             Name = subDepartment.Name,
             DepartmentId = subDepartment.DepartmentId,
+            Employees = subDepartment.Employees.Select(e=> new GetEmployeeDto()
+            {
+                Id = e.Id,
+                FullName = e.FullName,
+                Role = e.Role,    
+                PositionId = e.PositionId,
+            }).ToList()
            
         };
         return new ApiResponse<GetSubDepartmentDto>(result);

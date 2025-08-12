@@ -23,10 +23,10 @@ public class EmployeeController(IEmployeeService service) : ControllerBase
         await service.CreateAsync(request);
 
     [HttpPut("{id}")]
-    public async Task<ApiResponse<string>> Update(int id, [FromForm] UpdateEmployeeDto request) =>
+    public async Task<ApiResponse<string>> Update([FromRoute]int id, [FromForm] UpdateEmployeeDto request) =>
         await service.UpdateAsync(id, request);
     [HttpPut("{id}/photo")]
-    public async Task<ApiResponse<string>> UpdatePhoto(int employeeId,[FromForm]IFormFile profileImage) =>
+    public async Task<ApiResponse<string>> UpdatePhoto([FromRoute]int employeeId,[FromForm]IFormFile profileImage) =>
         await service.UpdateUserProfileImageAsync(employeeId, profileImage);
 
     [HttpDelete("{id}")]

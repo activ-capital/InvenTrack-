@@ -26,13 +26,13 @@ public class SubDepartmentService(ISubDepartmentRepository repository) : ISubDep
             Id = s.Id,
             Name = s.Name,
             DepartmentId = s.DepartmentId,
-         
             Employees = s.Employees.Select(e=> new GetEmployeeDto()
             {
                 Id = e.Id,
                 FullName = e.FullName,
                 Role = e.Role,    
                 PositionId = e.PositionId,
+                SubDepartmentId = e.SubDepartmentId,
             }).ToList()
         }).ToList();
         return new PaginationResponse<List<GetSubDepartmentDto>>(result, totalRecords, filter.PageNumber,
@@ -58,6 +58,7 @@ public class SubDepartmentService(ISubDepartmentRepository repository) : ISubDep
                 FullName = e.FullName,
                 Role = e.Role,    
                 PositionId = e.PositionId,
+                SubDepartmentId = e.SubDepartmentId,
             }).ToList()
            
         };

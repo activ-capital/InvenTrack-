@@ -105,31 +105,38 @@ public class EmployeeService(IEmployeeRepository repository, IWebHostEnvironment
 
         if (request.ProfileImage != null && request.ProfileImage.Length > 0)
         {
+            const long maxFileSize = 5 * 1024 * 1024; // 5 MB
+            var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif" };
+
             var fileExtension = Path.GetExtension(request.ProfileImage.FileName).ToLowerInvariant();
+
+            if (!allowedExtensions.Contains(fileExtension))
+                return new ApiResponse<string>(HttpStatusCode.BadRequest,
+                    "Invalid image format. Allowed: .jpg, .jpeg, .png, .gif");
+
+            if (request.ProfileImage.Length > maxFileSize)
+                return new ApiResponse<string>(HttpStatusCode.BadRequest, "Image file size must be less than 5MB");
+
+
             var uniqueFileName = $"{Guid.NewGuid()}{fileExtension}";
 
             var uploadsFolder = Path.Combine(_environment.ContentRootPath, "uploads", "profiles");
-
-            // ✅ Создаём папку, если её нет
-            if (!Directory.Exists(uploadsFolder))
-                Directory.CreateDirectory(uploadsFolder);
+            Directory.CreateDirectory(uploadsFolder);
 
             var filePath = Path.Combine(uploadsFolder, uniqueFileName);
-
-            await using (var stream = new FileStream(filePath, FileMode.Create)) 
+            await using (var stream = new FileStream(filePath, FileMode.Create))
             {
                 await request.ProfileImage.CopyToAsync(stream);
             }
 
             employee.ProfileImagePath = $"/uploads/profiles/{uniqueFileName}";
-        } 
+        }
 
         var result = await repository.CreateEmployee(employee);
         return result == 1
-            ? new ApiResponse<string>("Success")
+            ? new ApiResponse<string>(HttpStatusCode.OK, "Success")
             : new ApiResponse<string>(HttpStatusCode.BadRequest, "Failed");
     }
-
 
     public async Task<ApiResponse<string>> UpdateAsync(int id, UpdateEmployeeDto request)
     {
@@ -147,9 +154,30 @@ public class EmployeeService(IEmployeeRepository repository, IWebHostEnvironment
 
         if (request.ProfileImage != null && request.ProfileImage.Length > 0)
         {
+            const long maxFileSize = 5 * 1024 * 1024; // 5 MB
+            var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif" };
+
             var fileExtension = Path.GetExtension(request.ProfileImage.FileName).ToLowerInvariant();
+            if (!allowedExtensions.Contains(fileExtension))
+                return new ApiResponse<string>(HttpStatusCode.BadRequest,
+                    "Invalid image format. Allowed: .jpg, .jpeg, .png, .gif");
+
+            if (request.ProfileImage.Length > maxFileSize)
+                return new ApiResponse<string>(HttpStatusCode.BadRequest, "Image file size must be less than 5MB");
+
+            var uploadsFolder = Path.Combine(_environment.ContentRootPath, "uploads", "profiles");
+            Directory.CreateDirectory(uploadsFolder);
+
+            if (!string.IsNullOrEmpty(employee.ProfileImagePath))
+            {
+                var oldFilePath = Path.Combine(_environment.ContentRootPath, employee.ProfileImagePath.TrimStart('/'));
+                if (File.Exists(oldFilePath))
+                    File.Delete(oldFilePath);
+            }
+
             var uniqueFileName = $"{Guid.NewGuid()}{fileExtension}";
-            var filePath = Path.Combine(_environment.ContentRootPath, "uploads", "profiles", uniqueFileName);
+            var filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
             await using (var stream = new FileStream(filePath, FileMode.Create))
             {
                 await request.ProfileImage.CopyToAsync(stream);
@@ -160,7 +188,7 @@ public class EmployeeService(IEmployeeRepository repository, IWebHostEnvironment
 
         var result = await repository.UpdateEmployee(employee);
         return result == 1
-            ? new ApiResponse<string>("Success")
+            ? new ApiResponse<string>(HttpStatusCode.OK, "Success")
             : new ApiResponse<string>(HttpStatusCode.BadRequest, "Failed");
     }
 
@@ -195,7 +223,7 @@ public class EmployeeService(IEmployeeRepository repository, IWebHostEnvironment
         var uniqueFileName = $"{Guid.NewGuid()}{fileExtension}";
         var newFilePath = Path.Combine(uploadsFolder, uniqueFileName);
 
-            await using (var stream = new FileStream(newFilePath, FileMode.Create))
+        await using (var stream = new FileStream(newFilePath, FileMode.Create))
         {
             await profileImage.CopyToAsync(stream);
         }

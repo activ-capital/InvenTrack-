@@ -25,9 +25,6 @@ public class EmployeeController(IEmployeeService service) : ControllerBase
     [HttpPut("{id}")]
     public async Task<ApiResponse<string>> Update([FromRoute]int id, [FromForm] UpdateEmployeeDto request) =>
         await service.UpdateAsync(id, request);
-    [HttpPut("{id}/photo")]
-    public async Task<ApiResponse<string>> UpdatePhoto([FromRoute]int employeeId,[FromForm]IFormFile profileImage) =>
-        await service.UpdateUserProfileImageAsync(employeeId, profileImage);
 
     [HttpDelete("{id}")]
     public async Task<ApiResponse<string>> Delete([FromRoute] int id) => await service.DeleteAsync(id);
